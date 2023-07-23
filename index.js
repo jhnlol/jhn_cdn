@@ -25,7 +25,7 @@ const upload = multer({ storage });
 // Dodaj middleware do parsowania ciała żądania
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-const accessCode = 'Imagotop1';
+const accessCode = 'Imagotop';
 
 // Zmienna, która będzie przechowywać informację, czy użytkownik jest uwierzytelniony
 let isAuthenticated = false;
