@@ -27,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const accessCode = 'password';
 
+
 // Zmienna, która będzie przechowywać informację, czy użytkownik jest uwierzytelniony
 let isAuthenticated = false;
 
