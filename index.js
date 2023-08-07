@@ -3,7 +3,6 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser'); // Dodaj tę linię
-
 // Tworzenie instancji aplikacji Express.js
 const app = express();
 
@@ -19,20 +18,26 @@ const storage = multer.diskStorage({
   },
 });
 
+
+
+
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname+'/static/index.html'));
+});
+
 // Inicjalizacja modułu multer z użyciem zdefiniowanych opcji
 const upload = multer({ storage });
 
 // Dodaj middleware do parsowania ciała żądania
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-const accessCode = 'password';
-
+const accessCode = 'Johnatan';
 
 // Zmienna, która będzie przechowywać informację, czy użytkownik jest uwierzytelniony
 let isAuthenticated = false;
 
 // Obsługa routingu dla strony głównej
-app.get('/', (req, res) => {
+app.get('/l', (req, res) => {
   // Jeśli użytkownik jest uwierzytelniony, wyświetl standardowy widok
   if (isAuthenticated) {
     const files = fs.readdirSync('uploads/');
@@ -86,7 +91,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
   if (!req.file) {
     res.status(400).send('Nie wybrano pliku!');
   } else {
-    res.redirect('/');
+    res.redirect('/l');
   }
 });
 
@@ -105,7 +110,7 @@ app.post('/authenticate', (req, res) => {
   const enteredCode = req.body.accessCode;
   if (enteredCode === accessCode) {
     isAuthenticated = true;
-    res.redirect('/');
+    res.redirect('/l');
   } else {
     res.send('Nieprawidłowy kod dostępu!');
   }
@@ -118,7 +123,7 @@ app.post('/delete/:filename', (req, res) => {
     if (err) {
       res.status(404).send('Nie znaleziono pliku lub wystąpił błąd podczas usuwania!');
     } else {
-      res.redirect('/');
+      res.redirect('/l');
     }
   });
 });
